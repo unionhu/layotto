@@ -22,52 +22,38 @@
                     "server_name": "runtime",
                     "grpc_config": {
                       "hellos": {
-                        "quick_start_demo": {
-                          "type": "helloworld",
+                        "helloworld": {
                           "hello": "greeting"
                         }
                       },
                       "state": {
-                        "state_demo": {
-                          "type": "in-memory",
+                        "in-memory": {
                           "metadata": {
                           }
                         }
                       },
                       "lock": {
-                        "lock_demo": {
-                          "type": "in-memory",
+                        "in-memory": {
                           "metadata": {
                           }
                         }
                       },
                       "pub_subs": {
-                        "pub_subs_demo": {
-                          "type": "in-memory",
+                        "in-memory": {
                           "metadata": {
                             "consumerID": "1"
                           }
                         }
                       },
                       "sequencer": {
-                        "sequencer_demo": {
-                          "type": "in-memory",
+                        "in-memory": {
                           "metadata": {}
                         }
                       },
-                      "bindings": {
-                        "bindings_demo": {
-                          "type": "http",
-                          "metadata": {
-                            "url": "https://mosn.io/layotto"
-                          }
-                        }
-                      },
                       "custom_component": {
-                        "helloworld": {
-                          "demo": {
-                            "type": "in-memory",
-                            "metadata": {}
+                        "test": {
+                          "hello": {
+                            "metadata": {"key": "123"}
                           }
                         }
                       },
@@ -108,25 +94,5 @@
         }
       ]
     }
-  ],
-  "tracing": {
-    "enable": true,
-    "driver": "SOFATracer",
-    "config": {
-      "generator": "mosntracing",
-      "exporter": [
-        "stdout"
-      ]
-    }
-  },
-  "metrics": {
-    "sinks": [
-      {
-        "type": "prometheus",
-        "config": {
-          "port": 34903
-        }
-      }
-    ]
-  }
+  ]
 }

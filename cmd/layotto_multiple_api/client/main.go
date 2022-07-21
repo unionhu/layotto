@@ -26,7 +26,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
+	sfComponent "mosn.io/layotto/cmd/layotto_multiple_api/sf_runtime/component"
 )
 
 const (
@@ -41,7 +41,7 @@ func main() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewGreeterClient(conn)
+	c := sfComponent.NewGreeterClient(conn)
 
 	// Contact the server and print out its response.
 	name := defaultName
@@ -50,12 +50,9 @@ func main() {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
+	r, err := c.SayHello(ctx, &sfComponent.HelloRequest{Name: name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.GetMessage())
-	if r.GetMessage() != "Hello world" {
-		panic("Response message is not `Hello world`. I don't know why!")
-	}
 }

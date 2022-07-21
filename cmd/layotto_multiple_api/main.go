@@ -18,11 +18,13 @@ package main
 
 import (
 	"encoding/json"
+	component_sf "mosn.io/layotto/cmd/layotto_multiple_api/sf_runtime/component"
 	"os"
 	"strconv"
 	"time"
 
 	"mosn.io/layotto/cmd/layotto_multiple_api/helloworld/component"
+	sf_api "mosn.io/layotto/cmd/layotto_multiple_api/sf_runtime"
 	"mosn.io/layotto/components/custom"
 	"mosn.io/layotto/pkg/grpc/dapr"
 
@@ -202,7 +204,6 @@ import (
 	l8_grpc "mosn.io/layotto/pkg/grpc"
 	"mosn.io/layotto/pkg/runtime"
 
-	helloworld_api "mosn.io/layotto/cmd/layotto_multiple_api/helloworld"
 	_ "mosn.io/layotto/diagnostics/exporter_iml"
 )
 
@@ -257,7 +258,9 @@ func NewRuntimeGrpcServer(data json.RawMessage, opts ...grpc.ServerOption) (mgrp
 			// default GrpcAPI
 			default_api.NewGrpcAPI,
 			// a demo to show how to register your own gRPC API
-			helloworld_api.NewHelloWorldAPI,
+			//helloworld_api.NewHelloWorldAPI,
+			// sf GrpcAPI
+			sf_api.NewSFAPI,
 			// support Dapr API
 			// Currently it only support Dapr's InvokeService,secret API,state API and InvokeBinding API.
 			// Note: this feature is still in Alpha state and we don't recommend that you use it in your production environment.
@@ -468,8 +471,8 @@ func NewRuntimeGrpcServer(data json.RawMessage, opts ...grpc.ServerOption) (mgrp
 				return secretstore_env.NewEnvSecretStore(loggerForDaprComp)
 			}),
 		), // Custom components
-		runtime.WithCustomComponentFactory("helloworld",
-			custom.NewComponentFactory("in-memory", component.NewInMemoryHelloWorld),
+		runtime.WithCustomComponentFactory("test",
+			custom.NewComponentFactory("hello", component_sf.NewInMemoryHello),
 			custom.NewComponentFactory("goodbye", component.NewSayGoodbyeHelloWorld),
 		),
 	)
